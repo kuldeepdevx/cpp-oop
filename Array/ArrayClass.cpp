@@ -162,7 +162,7 @@ void ArrayOperations::performOperations() {
 int main() {
     ArrayOperations obj;
 
-    // obj.input();
+    obj.input();
     obj.performOperations();
 
     return 0;

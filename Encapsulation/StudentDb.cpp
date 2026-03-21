@@ -11,16 +11,17 @@ class StudentDb{
 
     public:
     StudentDb(){
+        name=new char[20];
         count++;
     }
 
     ~StudentDb() {
+        count--;
         delete[] name;
     }
 
     void setData(){
         cout<<"Enter name:";
-        name=new char[50];
         cin>>name;
         cout<<"Enter roll number:";
         cin>>rollNo;
@@ -45,50 +46,52 @@ class StudentDb{
         cout << "Total students: " << count << endl;
     }
 
-    friend void calGrade(StudentDb s);
+    friend void calGrade(StudentDb& s);
 
 };
 
 int StudentDb::count = 0;
 
-  void calGrade(StudentDb s){
+  void calGrade(StudentDb& s){
     float totalMarks=0;
     for(int i=0;i<5;i++){
         totalMarks+=s.marks[i];
     }
 
-    float temp=totalMarks/5;
+    float avg=totalMarks/5;
 
-    switch((int)temp){
-        case 90 ... 100:
-            cout<<"Grade: A+"<<endl;
-            break;
-
-        case 80 ... 89:
-            cout<<"Grade: A"<<endl;
-            break;
-
-        case 70 ... 79:
-            cout<<"Grade: B+"<<endl;
-            break;
-
-        case 60 ... 69:
-            cout<<"Grade: B"<<endl;
-            break;
-
-        case 50 ... 59:
-            cout<<"Grade: C"<<endl;
-            break;
-
-        default:
-            cout<<"Grade: F"<<endl;
+    if(avg>=90 && avg<=100){
+        cout<<"Grade: A+"<<endl;
+    }
+    else if(avg>=80 && avg<90) {
+        cout<<"Grade: A"<<endl;
+    }
+    else if(avg>=70 && avg<80) {
+        cout<<"Grade: B+"<<endl;
+    }
+    else if(avg>=60 && avg<70) {
+        cout<<"Grade: B"<<endl;
+    }
+    else if(avg>=50 && avg<60) {
+        cout<<"Grade: C"<<endl;
+    }
+    else {
+        cout<<"Grade: F"<<endl;
     }
 }
 
 int main(){
-    StudentDb s1;
-    s1.setData();
-    s1.display();
-    calGrade(s1);
+    int n;
+    cout<<"Enter number of students:";
+    cin>>n;
+    cout<<endl;
+    StudentDb s[n];
+    for(int i=0;i<n;i++){
+    s[i].setData();
+    s[i].display();
+    calGrade(s[i]);
     StudentDb::showCount();
+    cout<<endl;
+    }
+    return 0;
 }
